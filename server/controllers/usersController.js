@@ -1,6 +1,18 @@
 const Users = require("../models/users");
 
-const register = async (req, res) => {
+class UsersController {
+
+    async findAll(req, res){
+        try{
+            const users = await Users.find({});
+            res.send(users);
+        }
+        catch(e){
+            res.send({e})
+        }
+    }
+
+async register(req, res){
   try {
     const { email, password, admin } = req.body;
     const newUser = await Users.create({
@@ -15,6 +27,6 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = {
-  register,
-};
+}
+
+module.exports = new UsersController();

@@ -3,11 +3,14 @@ import axios from 'axios';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-function Add() {
+function AddTask() {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     status: '',
+    due: '',
+    reminder: '',
+    completed: '',
     category: ''
   });
 
@@ -23,6 +26,9 @@ function Add() {
       title: '',
       description: '',
       status: '',
+      due: '',
+    reminder: '',
+    completed: '',
       category: ''
     });
   };
@@ -36,6 +42,10 @@ function Add() {
   };
 
   return (
+
+    <div>
+        <h1>Add Task</h1>
+
     <div className="formContainer">
       <form onSubmit={handleSubmit}>
         <label>
@@ -66,6 +76,22 @@ function Add() {
           />
         </label>
         <label>
+        <input 
+            type="date"
+            name="due"
+            value={formData.due}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+        <input 
+            type="date"
+            name="reminder"
+            value={formData.reminder}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
           Category:
           <input 
             type="text"
@@ -76,8 +102,9 @@ function Add() {
         </label>
         <button type="submit">Submit</button>
       </form>
+      </div>
     </div>
   )
 }
 
-export default Add;
+export default AddTask;

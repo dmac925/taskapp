@@ -15,7 +15,7 @@ class tasksController {
     async findOne(req ,res){
         let { task_id} = req.params;
         try{
-            const task = await tasks.findOne({_id:task_id});
+            const task = await Tasks.findOne({_id:task_id});
             res.send(task);
         }
         catch(e){
@@ -25,9 +25,10 @@ class tasksController {
     }
 
     async insert (req, res) {
-        let { task } = req.body;
+        const task = req.body;
+        console.log(task);
         try{
-            const done = await Tasks.create({task});
+            const done = await Tasks.create(task);
             res.send(done)
         }
         catch(e){
@@ -36,10 +37,11 @@ class tasksController {
     }
 
     async delete (req, res){
-        console.log('delete!!!')
-        let { taskID } = req.body;
+        let { taskId } = req.body;
+        
         try{
-            const removed = await tasks.deleteOne({ _id: taskId });
+            const removed = await Tasks.deleteOne({ _id: taskId });
+            
             res.send({removed});
         }
         catch(error){
