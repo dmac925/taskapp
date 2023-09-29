@@ -3,7 +3,8 @@
 }
 
 .formContainer {
-  display: flex;
+  display: inline-flex;
+  flex-direction: column;
   justify-content: center;
   margin: 20px;
 }

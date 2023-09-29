@@ -4,11 +4,32 @@ class tasksController {
 
     async findAll(req, res){
         try{
-            const tasks = await Tasks.find({});
+            const tasks = await Tasks.find();
             res.send(tasks);
         }
         catch(e){
             res.send({e})
+        }
+    }
+
+    async findCategories(req, res) {
+        try {
+            const tasks = await Tasks.find().select('category -_id');
+            const uniqueCategories = [...new Set(tasks.map(task => task.category))];
+            res.send(uniqueCategories);
+        } catch (e) {
+            res.send({ e });
+        }
+    }
+
+    async findUserTasks(req, res){
+        const { user_id } = req.body; 
+        try {
+            const tasks = await Tasks.find({ user_id }); 
+            res.send(tasks);
+        }
+        catch(e) {
+            res.send({ e });
         }
     }
 

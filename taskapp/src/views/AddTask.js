@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function AddTask() {
   const [formData, setFormData] = useState({
@@ -13,6 +11,19 @@ function AddTask() {
     completed: '',
     category: ''
   });
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:4000/tasks/categories')
+      .then(response => {
+        setCategories(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,19 +98,24 @@ function AddTask() {
         <input 
             type="date"
             name="reminder"
-            value={formData.reminder}
+            value={formData.due}
             onChange={handleChange}
           />
         </label>
         <label>
-          Category:
-          <input 
-            type="text"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-          />
-        </label>
+  Category:
+  <select 
+    name="category"
+    value={formData.category}
+    onChange={handleChange}
+  >
+    {categories.map((category, index) => (
+      <option key={index} value={category}>
+        {category}
+      </option>
+    ))}
+  </select>
+</label>
         <button type="submit">Submit</button>
       </form>
       </div>

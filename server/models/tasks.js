@@ -7,7 +7,8 @@ const taskSchema = new mongoose.Schema({
     due: { type: Date, required: false, unique: true },
     reminder: { type: Date, required: false, unique: true },
     completed: { type: Date, required: false, unique: true },
-    category: { type: String, required: true, unique: false }
+    category: { type: String, required: true, unique: false },
+    user_id:{type:mongoose.Schema.Types.ObjectId,required:true,ref:"users"}
  
   });
   

@@ -1,32 +1,92 @@
 const Users = require("../models/users");
+const Tasks = require('../models/tasks');
+const jwt = require("jsonwebtoken");
+const validator = require("validator");
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const jwt_secret = process.env.JWT_SECRET;
 
-class UsersController {
-
-    async findAll(req, res){
-        try{
-            const users = await Users.find({});
-            res.send(users);
-        }
-        catch(e){
-            res.send({e})
-        }
-    }
-
-async register(req, res){
+const findAll = async (req, res) => {
   try {
-    const { email, password, admin } = req.body;
-    const newUser = await Users.create({
-      email,
-      password,
-      admin: admin || false,
-    });
-    res.send(newUser);
-  } catch (error) {
-    res.send({ error });
-    console.log("error ===>", error);
+    const users = await Users.find({});
+    res.send(users);
+  } catch (e) {
+    res.send({ e });
   }
 };
 
-}
+const register = async (req, res) => {
+  const { email, password, password2, admin } = req.body;
+  
+  if (!email || !password || !password2) {
+    return res.json({ ok: false, message: "All fields required" });
+  }
+  if (password !== password2) {
+    return res.json({ ok: false, message: "Passwords must match" });
+  }
+  if (!validator.isEmail(email)) {
+    return res.json({ ok: false, message: "Invalid email" });
+  }
+  
+  try {
+    const user = await Users.findOne({ email });
+    if (user) return res.json({ ok: false, message: "User exists!" });
+  
+    const hash = await bcrypt.hash(password, saltRounds);
+  
+    const newUser = await Users.create({
+      email,
+      password: hash,
+      admin: admin || false,
+    });
+  
+    const initialTasks = [
+      // Use newUser._id
+      { title: 'Tell your employer you are pregnant', category: 'Work', user_id: newUser._id },
+      { title: 'Check your life insurance', category: 'Personal Admin', user_id: newUser._id },
+      { title: 'Set up a Lasting Power of Attorney', category: 'Personal Admin', user_id: newUser._id },
+      { title: 'Cut some monthly subscriptions', category: 'Personal Admin', user_id: newUser._id }
+    ];
+  
+    await Tasks.insertMany(initialTasks);
+    res.json({ ok: true, message: "Successfully registered" });
+  } catch (error) {
+    res.json({ ok: false, error });
+  }
+};
 
-module.exports = new UsersController();
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  
+  if (!email || !password) {
+    return res.json({ ok: false, message: "All fields are required" });
+  }
+  if (!validator.isEmail(email)) {
+    return res.json({ ok: false, message: "Invalid email provided" });
+  }
+  
+  try {
+    const user = await Users.findOne({ email });
+    if (!user) return res.json({ ok: false, message: "Invalid user provided" });
+  
+    const match = await bcrypt.compare(password, user.password);
+  
+    if (match) {
+      const token = jwt.sign({ userEmail: user.email }, jwt_secret, { expiresIn: "1h" });
+      res.json({ ok: true, message: "welcome back", token, email });
+    } else return res.json({ ok: false, message: "Invalid data provided" });
+  } catch (error) {
+    res.json({ ok: false, error });
+  }
+};
+
+const verify_token = (req, res) => {
+  const token = req.headers.authorization;
+  jwt.verify(token, jwt_secret, (err, succ) => {
+    err
+      ? res.json({ ok: false, message: "Token is corrupted" })
+      : res.json({ ok: true, succ });
+  });
+};
+
+module.exports = { register, login, verify_token, findAll };
