@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
+
 function AddTask() {
+  const [userId, setUserId] = useState(null); 
+  const [email, setEmail] = useState(JSON.parse(localStorage.getItem("email")));
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -9,7 +13,8 @@ function AddTask() {
     due: '',
     reminder: '',
     completed: '',
-    category: ''
+    category: '',
+    user_id: '', 
   });
 
   const [categories, setCategories] = useState([]);
@@ -25,22 +30,35 @@ function AddTask() {
   }, []);
 
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios.post('http://localhost:4000/tasks/new', formData)
+  useEffect(() => {
+    axios.get(`http://localhost:4000/users/find/${email}`)
+      .then(response => {
+        setUserId(response.data.user_id);
+      })
       .catch(error => {
         console.log(error);
       });
+  }, [email]);
 
+  
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const dataToSend = { ...formData, user_id: userId };
+    axios.post('http://localhost:4000/tasks/new', dataToSend)
+      .catch(error => {
+        console.log(error);
+      });
 
     setFormData({
       title: '',
       description: '',
       status: '',
       due: '',
-    reminder: '',
-    completed: '',
-      category: ''
+      reminder: '',
+      completed: '',
+      category: '',
+      user_id: ''
     });
   };
 
@@ -98,7 +116,7 @@ function AddTask() {
         <input 
             type="date"
             name="reminder"
-            value={formData.due}
+            value={formData.reminder}
             onChange={handleChange}
           />
         </label>
@@ -121,6 +139,6 @@ function AddTask() {
       </div>
     </div>
   )
-}
-
+    }
+  
 export default AddTask;

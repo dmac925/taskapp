@@ -1,4 +1,5 @@
 const Tasks = require('../models/tasks');
+const Users = require('../models/users'); 
 
 class tasksController {
 
@@ -17,6 +18,20 @@ class tasksController {
             const tasks = await Tasks.find().select('category -_id');
             const uniqueCategories = [...new Set(tasks.map(task => task.category))];
             res.send(uniqueCategories);
+        } catch (e) {
+            res.send({ e });
+        }
+    }
+
+    async findUserTasksEmail(req, res) {
+        const { email } = req.body;
+        try {
+            const user = await Users.findOne({ email }); 
+            if (!user) {
+                return res.send({ error: "User not found" });
+            }
+            const tasks = await Tasks.find({ user_id: user._id });
+            res.send(tasks);
         } catch (e) {
             res.send({ e });
         }

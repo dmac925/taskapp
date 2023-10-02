@@ -15,6 +15,20 @@ const findAll = async (req, res) => {
   }
 };
 
+const getUserIDByEmail = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await Users.findOne({ email }, '_id');
+    if (user) {
+      res.json({ ok: true, user_id: user._id });
+    } else {
+      res.json({ ok: false, message: 'User not found' });
+    }
+  } catch (e) {
+    res.send({ e });
+  }
+};
+
 const register = async (req, res) => {
   const { email, password, password2, admin } = req.body;
   
@@ -41,7 +55,7 @@ const register = async (req, res) => {
     });
   
     const initialTasks = [
-      // Use newUser._id
+      
       { title: 'Tell your employer you are pregnant', category: 'Work', user_id: newUser._id },
       { title: 'Check your life insurance', category: 'Personal Admin', user_id: newUser._id },
       { title: 'Set up a Lasting Power of Attorney', category: 'Personal Admin', user_id: newUser._id },
@@ -89,4 +103,19 @@ const verify_token = (req, res) => {
   });
 };
 
-module.exports = { register, login, verify_token, findAll };
+const findUserByEmail = async (req, res) => {
+  const email = req.params.email;
+  try {
+    const user = await Users.findOne({ email: email }, '_id'); 
+    if (user) {
+      res.json({ ok: true, user_id: user._id });
+    } else {
+      res.json({ ok: false, message: 'User not found' });
+    }
+  } catch (e) {
+    res.send({ e });
+  }
+};
+
+
+module.exports = { register, login, verify_token, findAll, findUserByEmail, getUserIDByEmail  };

@@ -8,17 +8,16 @@ function MyTasks() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchWord, setSearchWord] = useState('');
 
+  const email = JSON.parse(localStorage.getItem("User")).email;
+
   const fetchMyTasks = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:4000/tasks/userTasks",
-        { "user_id": "65157fa685dd2424295c3335" }
-      );
-      setTasks(response.data);
+        const response = await axios.get("http://localhost:4000/tasks/userTasksEmail",{ email });
+        setTasks(response.data);
     } catch (error) {
-      console.log(error);
+        console.log(error);
     }
-  };
+}
 
   useEffect(() => {
     fetchMyTasks()
