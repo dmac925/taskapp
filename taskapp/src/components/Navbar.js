@@ -16,6 +16,7 @@ const Navbar = ({ isLoggedIn }) => {
       {isLoggedIn && (
         <>
           <NavLink to="/myTasks">My Tasks</NavLink>
+          <NavLink to="myTasksTable">My Tasks Table</NavLink>
           <NavLink to="addTask">Add Task</NavLink>
           <NavLink to="allTasks">All Tasks</NavLink>
           <NavLink to="allUsers">All Users</NavLink>

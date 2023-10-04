@@ -49,7 +49,7 @@ function AllTasks() {
         ))}
       </select>
 
-      <div>
+      <div className="taskContainer"> 
         {tasks.filter((task) => {
               const categoryMatch =
                 selectedCategory === '' || task.category === selectedCategory;
@@ -66,7 +66,7 @@ function AllTasks() {
               <p>Description: {task.description}</p>
               <p>Status: {task.status}</p>
               <p>Category: {task.category}</p>
-              <p>Due Date: {task.due}</p>
+              <p>Due Date: {new Date(task.due).toLocaleDateString()}</p>
             </div>
           ))}
       </div>

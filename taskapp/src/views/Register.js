@@ -26,10 +26,11 @@ const Register = (props) => {
 		debugger
 		e.preventDefault();
 		try {
-			const response = await axios.post(`${URL}/users/register`, {
+			const response = await axios.post(`http://localhost:4000/users/register`, {
 				email: formData.email,
 				password: formData.password,
-				password2: formData.password2
+				password2: formData.password2,
+        admin: formData.admin
 			});
 			setMessage(response.data.message);
 			//console.log(response)

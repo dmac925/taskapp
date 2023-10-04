@@ -6,33 +6,46 @@ function MyTasks() {
 
   const [tasks, setTasks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('')
   const [searchWord, setSearchWord] = useState('');
 
-  const email = JSON.parse(localStorage.getItem("User")).email;
-
+  const email = JSON.parse(localStorage.getItem("user"))?.email;
+  
   const fetchMyTasks = async () => {
     try {
-        const response = await axios.get("http://localhost:4000/tasks/userTasksEmail",{ email });
+        const response = await axios.post("http://localhost:4000/tasks/userTasksEmail", { email });
         setTasks(response.data);
+        console.log(response.data)
     } catch (error) {
         console.log(error);
     }
 }
 
-  useEffect(() => {
-    fetchMyTasks()
-  }, [] )
-
-  const categories = [...new Set(tasks.map((task) => task.category))];
-
-  const deleteTask = async (taskId) => {
+const markComplete = async (taskId) => {
     try {
-      await axios.post('http://localhost:4000/tasks/delete', { data: { taskId: taskId } });
+        await axios.post(`http://localhost:4000/tasks/markComplete`, { taskId });
       fetchMyTasks();
     } catch (error) {
       console.log(error);
     }
   };
+
+const deleteTask = async (taskId) => {
+    try {
+      await axios.post(`http://localhost:4000/tasks/delete`, { taskId });
+      fetchMyTasks();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+useEffect(() => {
+    fetchMyTasks()
+  }, [] )
+
+  const categories = [...new Set(tasks.map((task) => task.category))];
+
+  const statuses = [...new Set(tasks.map((task) => task.status))];
 
   return (
 
@@ -58,7 +71,19 @@ function MyTasks() {
         ))}
       </select>
 
-      <div>
+      <select
+        value={selectedStatus}
+        onChange={(e) => setSelectedStatus(e.target.value)}
+      >
+        <option value="">Status</option>
+        {statuses.map((status, index) => (
+          <option key={index} value={status}>
+            {status}
+          </option>
+        ))}
+      </select>
+
+      <div className="taskContainer"> 
         {tasks.filter((task) => {
               const categoryMatch =
                 selectedCategory === '' || task.category === selectedCategory;
@@ -75,8 +100,9 @@ function MyTasks() {
               <p>Description: {task.description}</p>
               <p>Status: {task.status}</p>
               <p>Category: {task.category}</p>
-              <p>Due Date: {task.due}</p>
-              <button onClick={() => deleteTask(task._id)}>Delete</button>
+              <p>Due Date: {new Date(task.due).toLocaleDateString()}</p>
+              <button onClick={() => markComplete(task._id)}>Mark as Complete</button>
+    <button onClick={() => deleteTask(task._id)}>Delete</button>
             </div>
           ))}
       </div>

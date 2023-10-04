@@ -6,15 +6,13 @@ import { URL } from "./config";
 import * as jose from "jose";
 import Navbar from "./components/Navbar.js";
 import AllTasks from './views/AllTasks';
-import AllUsers from './views/AllUsers';
 import AddTask from './views/AddTask';
+import AllUsers from './views/AllUsers';
 import Register from './views/Register';
 import Login from './views/Login';
 import MyTasks from './views/MyTasks';
+import MyTasksTable from './views/MyTasksTable';
 import SignOut from './views/SignOut';
-
-
-
 
 function App() {
 
@@ -80,6 +78,7 @@ function App() {
         <Route path ="/addTask" element={<AddTask />} />
           <Route path ="/allTasks" element={<AllTasks />} />
           <Route path ="/myTasks" element={<MyTasks />} />
+          <Route path ="/myTasksTable" element={<MyTasksTable />} />
           <Route path ="/allUsers" element={<AllUsers />} />
           <Route path ="/register" element={<Register />} />
           <Route path ="/login" element={<Login />} />

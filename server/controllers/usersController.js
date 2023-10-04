@@ -53,16 +53,19 @@ const register = async (req, res) => {
       password: hash,
       admin: admin || false,
     });
+    console.log("Creating new user:", newUser);
   
     const initialTasks = [
       
-      { title: 'Tell your employer you are pregnant', category: 'Work', user_id: newUser._id },
-      { title: 'Check your life insurance', category: 'Personal Admin', user_id: newUser._id },
-      { title: 'Set up a Lasting Power of Attorney', category: 'Personal Admin', user_id: newUser._id },
-      { title: 'Cut some monthly subscriptions', category: 'Personal Admin', user_id: newUser._id }
+      { title: 'Tell your employer you are pregnant', category: 'Work', status: 'To Do', user_id: newUser._id },
+      { title: 'Check your life insurance', category: 'Personal Admin', status: 'To Do', user_id: newUser._id },
+      { title: 'Set up a Lasting Power of Attorney', category: 'Personal Admin', status: 'To Do', user_id: newUser._id },
+      { title: 'Cut some monthly subscriptions', category: 'Personal Admin', status: 'To Do', user_id: newUser._id }
     ];
-  
+
     await Tasks.insertMany(initialTasks);
+
+
     res.json({ ok: true, message: "Successfully registered" });
   } catch (error) {
     res.json({ ok: false, error });
