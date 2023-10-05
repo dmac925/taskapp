@@ -79,14 +79,7 @@ const Register = (props) => {
             onChange={handleChange}
           />
         </label>
-        <label>
-  <span>Admin</span><input 
-  type="checkbox"
-  name="admin"
-  checked={formData.admin}
-            onChange={handleChange}/>
-  <span class="slider round"></span>
-</label>
+     
         <button type="submit">Submit</button>
       </form>
       <div class="registerMessage">

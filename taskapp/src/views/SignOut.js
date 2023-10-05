@@ -5,7 +5,7 @@ const SignOut = (props) => {
 
   let navigate = useNavigate();
   return (
-    <div className="secret_page">
+    <div>
       <h1>Thank you for visiting</h1>
       <button
         onClick={() => {

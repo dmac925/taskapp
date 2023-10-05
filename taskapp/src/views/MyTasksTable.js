@@ -25,9 +25,10 @@ const [sortBy, setSortBy] = useState('title');
     }
 }
 
-const markComplete = async (taskId) => {
+const markComplete = async (taskId, currentStatus) => {
+    const newStatus = currentStatus === 'Complete' ? 'In Progress' : 'Complete';
     try {
-        await axios.post(`http://localhost:4000/tasks/markComplete`, { taskId });
+      await axios.post(`http://localhost:4000/tasks/taskStatus`, { taskId, newStatus });
       fetchMyTasks();
     } catch (error) {
       console.log(error);
@@ -56,6 +57,7 @@ useEffect(() => {
   return (
 
     <div>
+        <div className="tableContainer">
 
         <Table
               width={1000}
@@ -76,13 +78,16 @@ useEffect(() => {
           <Column label="Status" dataKey="status" width={100} />
           <Column label="Category" dataKey="category" width={100} />
           <Column label="Due Date" dataKey="due" width={100} cellRenderer={({ cellData }) => new Date(cellData).toLocaleDateString()} />
-          <Column label="Actions" width={200} cellRenderer={({ rowData }) => (
+          <Column label="Actions" width={300} cellRenderer={({ rowData }) => (
             <>
-              <button onClick={() => markComplete(rowData._id)}>Mark as Complete</button>
+              <button onClick={() => markComplete(rowData._id, rowData.status)}>
+      {rowData.status === 'Complete' ? 'Mark as In Progress' : 'Mark as Complete'}
+    </button>
               <button onClick={() => deleteTask(rowData._id)}>Delete</button>
             </>
           )} />
         </Table>
+        </div>
   </div>
 );
           }

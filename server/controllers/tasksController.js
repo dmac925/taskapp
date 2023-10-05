@@ -72,10 +72,10 @@ class tasksController {
         }
     }
 
-    async markComplete(req, res) {
-        const { taskId } = req.body;
+    async taskStatus(req, res) {
+        const { taskId, newStatus } = req.body;
         try {
-          const updated = await Tasks.updateOne({ _id: taskId }, { $set: { status: 'Complete' } });
+          const updated = await Tasks.updateOne({ _id: taskId }, { $set: { status: newStatus } });
           res.send({ updated });
         } catch (error) {
           res.send({ error });

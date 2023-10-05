@@ -9,6 +9,17 @@
   margin: 20px;
 }
 
+.custNav {
+  justify-content: center;
+}
+
+.tableContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 20px;
+}
+
 .taskContainer {
   display: flex;
   flex-wrap: wrap;
@@ -73,3 +84,5 @@ form {
     transform: rotate(360deg);
   }
 }
+
+

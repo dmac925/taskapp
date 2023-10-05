@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { URL } from "./config";
 import * as jose from "jose";
 import Navbar from "./components/Navbar.js";
+import Home from "./views/Home";
 import AllTasks from './views/AllTasks';
 import AddTask from './views/AddTask';
 import AllUsers from './views/AllUsers';
@@ -17,6 +18,7 @@ import SignOut from './views/SignOut';
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(null)
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [token, setToken] = useState(JSON.parse(localStorage.getItem("token")));
 
@@ -42,10 +44,12 @@ function App() {
     // composing a user object based on what data we included in our token (login controller - jwt.sign() first argument)
     let user = {
       email: decodedToken.userEmail,
+      admin: decodedToken.userAdmin
     };
     localStorage.setItem("token", JSON.stringify(token));
     localStorage.setItem("user", JSON.stringify(user));
     setIsLoggedIn(true);
+    setIsAdmin(decodedToken.userAdmin)
   };
   const logout = () => {
     localStorage.removeItem("token");
@@ -57,9 +61,9 @@ function App() {
     <div className="App">
 
 <Router>
-      <Navbar isLoggedIn={isLoggedIn} />
+<Navbar isLoggedIn={isLoggedIn} isAdmin={isAdmin} logout={logout} />
       <Routes>
-        <Route path="/addTask" element={<AddTask />} />
+        <Route path="/home" element={<Home />} />
         <Route
           path="/login"
           element={
@@ -79,9 +83,9 @@ function App() {
           <Route path ="/allTasks" element={<AllTasks />} />
           <Route path ="/myTasks" element={<MyTasks />} />
           <Route path ="/myTasksTable" element={<MyTasksTable />} />
-          <Route path ="/allUsers" element={<AllUsers />} />
           <Route path ="/register" element={<Register />} />
           <Route path ="/login" element={<Login />} />
+          <Route path="/allUsers" element={isAdmin ? <AllUsers /> : <Navigate to="/login" />} />
         
         <Route
           path="/signOut"

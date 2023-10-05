@@ -11,7 +11,7 @@ router.post('/userTasksEmail', controller.findUserTasksEmail);
 
 router.post('/userTasks', controller.findUserTasks);
 
-router.post('/markComplete', controller.markComplete);
+router.post('/taskStatus', controller.taskStatus);
 
 router.post('/new', controller.insert);
 
