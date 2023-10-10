@@ -19,11 +19,8 @@ async function connecting(){
     }
     }
 
-
-
 app.use("/tasks", require ("./routes/tasksRoutes"));
 app.use("/users", require ("./routes/usersRoutes"));
-
 
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, '../taskapp/build')));
