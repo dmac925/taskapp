@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { URL } from "../config";
 
 const Register = (props) => {
@@ -26,7 +26,7 @@ const Register = (props) => {
 		debugger
 		e.preventDefault();
 		try {
-			const response = await axios.post(`http://localhost:4000/users/register`, {
+			const response = await axios.post('${URL}/users/register', {
 				email: formData.email,
 				password: formData.password,
 				password2: formData.password2,
@@ -60,6 +60,7 @@ const Register = (props) => {
             type="text"
             className="form-control"
             id="email"
+            name="email"
             value={formData.email}
             onChange={handleChange}
           />
@@ -73,6 +74,7 @@ const Register = (props) => {
             type="password"
             className="form-control"
             id="password"
+            name="password"
             value={formData.password}
             onChange={handleChange}
           />
@@ -85,6 +87,7 @@ const Register = (props) => {
             type="password"
             className="form-control"
             id="password2"
+            name="password2"
             value={formData.password2}
             onChange={handleChange}
           />

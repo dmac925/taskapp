@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { URL } from "../config";
 
 
 function AddItem() {
@@ -21,7 +22,7 @@ function AddItem() {
 
 const fetchCats = async () => {
   try {
-   const res =  await axios.get('http://localhost:4000/tasks/categories')
+   const res =  await axios.get('${URL}/items/categories')
     console.log(res)
 
       setCategories(res.data);
@@ -37,7 +38,7 @@ const fetchCats = async () => {
 
   useEffect(() => {
     const findUserId = () => {
-    axios.get(`http://localhost:4000/users/find/${email}`)
+    axios.get(`${URL}/users/find/${email}`)
       .then(response => {
         console.log(response);
         setUserId(response.data.user_id);
@@ -57,7 +58,7 @@ findUserId()
       e.preventDefault();
       const dataToSend = { ...formData, user_id: userId };
       console.log(dataToSend)
-     const res = await axios.post('http://localhost:4000/items/new', dataToSend)
+     const res = await axios.post(`${URL}/items/new`, dataToSend)
   
   
       setFormData({
@@ -104,9 +105,9 @@ findUserId()
           <div className="form-group">
             <label>Status:</label>
             <select name="status" value={formData.status} onChange={handleChange} className="form-control">
-              <option value="To Do">To Do</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Completed">Completed</option>
+              <option value="To Get">To Do</option>
+              <option value="Ordered">In Progress</option>
+              <option value="Got">Completed</option>
             </select>
           </div>
           <div className="form-group">
@@ -120,9 +121,9 @@ findUserId()
           <div className="form-group">
             <label>Category:</label>
             <select name="category" value={formData.category} onChange={handleChange} className="form-control">
-              <option value="Work">Work</option>
-              <option value="Personal">Personal</option>
-              <option value="School">School</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Home">Home</option>
+              <option value="Wellness">Furniture</option>
             </select>
           </div>
           <button type="submit" className="btn btn-outline-primary">Submit</button>

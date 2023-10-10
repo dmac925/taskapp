@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Table, Column, AutoSizer } from 'react-virtualized';
 import 'react-virtualized/styles.css';
 import axios from "axios"
+import { URL } from "../config";
+
 
 
 function MyTasksTable() {
@@ -17,7 +19,7 @@ const [sortBy, setSortBy] = useState('title');
   
   const fetchMyTasks = async () => {
     try {
-        const response = await axios.post("http://localhost:4000/tasks/userTasksEmail", { email });
+        const response = await axios.post('${URL}/tasks/userTasksEmail', { email });
         setTasks(response.data);
         console.log(response.data)
     } catch (error) {

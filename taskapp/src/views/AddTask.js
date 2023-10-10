@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { URL } from '../config';
 
 function AddTask() {
   const initialStatus = ["In Progress", "Compeleted", "Not Started"];
@@ -20,7 +20,7 @@ function AddTask() {
 
 const fetchCats = async () => {
   try {
-   const res =  await axios.get('http://localhost:4000/tasks/categories')
+   const res =  await axios.get(`${URL}/tasks/categories`)
     console.log(res)
     // if response is okay - setCategories:
       setCategories(res.data);
@@ -36,7 +36,7 @@ const fetchCats = async () => {
 
   useEffect(() => {
     const findUserId = () => {
-    axios.get(`http://localhost:4000/users/find/${email}`)
+    axios.get(`${URL}/users/find/${email}`)
       .then(response => {
         console.log(response);
         setUserId(response.data.user_id);
@@ -56,7 +56,7 @@ findUserId()
       e.preventDefault();
       const dataToSend = { ...formData, user_id: userId };
       console.log(dataToSend)
-     const res = await axios.post('http://localhost:4000/tasks/new', dataToSend)
+     const res = await axios.post(`${URL}/tasks/new`, dataToSend)
   
   
       setFormData({

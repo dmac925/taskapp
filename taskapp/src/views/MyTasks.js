@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
-import { TaskCard } from './TaskCard'; // Import the new TaskCard component
+import { TaskCard } from './TaskCard';
+import { URL } from "../config";
 
 function MyTasks() {
 
@@ -15,7 +16,7 @@ function MyTasks() {
   
   const fetchMyTasks = async () => {
     try {
-        const response = await axios.post("http://localhost:4000/tasks/userTasksEmail", { email });
+        const response = await axios.post('${URL}/tasks/userTasksEmail', { email });
         setTasks(response.data);
         console.log(response.data)
     } catch (error) {
@@ -26,7 +27,7 @@ function MyTasks() {
 const taskStatus = async (taskId, currentStatus) => {
   const newStatus = currentStatus === 'Complete' ? 'In Progress' : 'Complete';
   try {
-    await axios.post(`http://localhost:4000/tasks/taskStatus`, { taskId, newStatus });
+    await axios.post('${URL}/tasks/taskStatus', { taskId, newStatus });
     fetchMyTasks();
   } catch (error) {
     console.log(error);
@@ -35,7 +36,7 @@ const taskStatus = async (taskId, currentStatus) => {
 
 const deleteTask = async (taskId) => {
     try {
-      await axios.post(`http://localhost:4000/tasks/delete`, { taskId });
+      await axios.post('${URL}/tasks/delete', { taskId });
       fetchMyTasks();
     } catch (error) {
       console.log(error);

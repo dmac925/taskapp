@@ -22,7 +22,7 @@ const MyNavbar = ({ isLoggedIn, isAdmin, logout }) => {
             {isLoggedIn && (
               <>
                 <Nav.Link><NavLink to="/myTasks">My Tasks</NavLink></Nav.Link>
-                {/* <Nav.Link><NavLink to="/myItems">My Items</NavLink></Nav.Link> */}
+                <Nav.Link><NavLink to="/myItems">My Shopping List</NavLink></Nav.Link>
                 <Nav.Link><NavLink to="/myTasksTable">My Tasks Table</NavLink></Nav.Link>
                 <Nav.Link><NavLink to="/addTask">Add Task</NavLink></Nav.Link>
                 <Nav.Link><NavLink to="/addItem">Add Item</NavLink></Nav.Link>
