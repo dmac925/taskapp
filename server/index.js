@@ -5,7 +5,7 @@ const port = process.env.PORT || 5060;
 const mongoose = require("mongoose");
 
 app.use(require("express").json());
-app.use(require("express").urlencoded());
+app.use(express.urlencoded({ extended: false }));
 app.use(require("cors")());
 
 const path = require('path');
