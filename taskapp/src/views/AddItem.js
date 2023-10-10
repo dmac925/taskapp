@@ -22,7 +22,7 @@ function AddItem() {
 
 const fetchCats = async () => {
   try {
-   const res =  await axios.get('${URL}/items/categories')
+   const res =  await axios.get(`${URL}/items/categories`)
     console.log(res)
 
       setCategories(res.data);

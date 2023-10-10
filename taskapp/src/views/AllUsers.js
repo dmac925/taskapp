@@ -10,7 +10,7 @@ function AllUsers() {
   const fetchUsers = async () => {
     try {
       const response = await axios.get(
-        '${URL}/users/'
+        `${URL}/users/`
         );
         setUsers(response);
 

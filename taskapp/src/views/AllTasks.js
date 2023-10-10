@@ -12,7 +12,7 @@ function AllTasks() {
   const fetchTasks = async () => {
     try {
       const response = await axios.get(
-        '${URL}/tasks/'
+        `${URL}/tasks/`
         );
         setTasks(response.data);
 

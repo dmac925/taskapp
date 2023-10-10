@@ -26,7 +26,7 @@ const Register = (props) => {
 		debugger
 		e.preventDefault();
 		try {
-			const response = await axios.post('${URL}/users/register', {
+			const response = await axios.post(`${URL}/users/register`, {
 				email: formData.email,
 				password: formData.password,
 				password2: formData.password2,

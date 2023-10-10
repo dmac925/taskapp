@@ -1,8 +1,8 @@
 const Tasks = require('../models/tasks');
 const Users = require('../models/users'); 
-const Items = require('../models/tasks');
+const Items = require('../models/items');
 
-class tasksController {
+class itemsController {
 
     async findAll(req, res){
         try{
