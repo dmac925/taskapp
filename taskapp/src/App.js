@@ -8,12 +8,13 @@ import Navbar from "./components/Navbar.js";
 import Home from "./views/Home";
 import AllTasks from './views/AllTasks';
 import AddTask from './views/AddTask';
+import AddItem from './views/AddItem';
 import AllUsers from './views/AllUsers';
 import Register from './views/Register';
 import Login from './views/Login';
 import MyTasks from './views/MyTasks';
+import MyItems from './views/MyItems';
 import MyTasksTable from './views/MyTasksTable';
-import SignOut from './views/SignOut';
 
 function App() {
 
@@ -80,23 +81,15 @@ function App() {
         />
 
         <Route path ="/addTask" element={<AddTask />} />
+        <Route path ="/addItem" element={<AddItem />} />
           <Route path ="/allTasks" element={<AllTasks />} />
           <Route path ="/myTasks" element={<MyTasks />} />
+          <Route path ="/myItems" element={<MyItems />} />
           <Route path ="/myTasksTable" element={<MyTasksTable />} />
           <Route path ="/register" element={<Register />} />
           <Route path ="/login" element={<Login />} />
           <Route path="/allUsers" element={isAdmin ? <AllUsers /> : <Navigate to="/login" />} />
-        
-        <Route
-          path="/signOut"
-          element={
-            !isLoggedIn ? (
-              <Navigate to="/" /> 
-            ) : (
-              <SignOut logout={logout} user={user} />
-            )
-          }
-        />
+      
       </Routes>
     </Router>
     </div>

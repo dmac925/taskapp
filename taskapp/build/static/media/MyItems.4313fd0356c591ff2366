@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from "axios";
-import { TaskCard } from './TaskCard'; // Import the new TaskCard component
+import React, { useState, useEffect } from 'react'
+import axios from "axios"
 
 function MyTasks() {
 
@@ -122,16 +121,23 @@ useEffect(() => {
             })
 
             .map((task, index) => (
-              <TaskCard 
-                key={index} 
-                task={task}
-                taskStatus={taskStatus}
-                deleteTask={deleteTask}
-              />
+              <div className="card" key={index} style={{ width: '18rem' }}>
+                <div className="card-body">
+                  <h5 className="card-title">{task.title}</h5>
+              <p class="card-text">Description: {task.description}</p>
+              <p>Status: {task.status}</p>
+              <p>Category: {task.category}</p>
+              <p>Due Date: {new Date(task.due).toLocaleDateString()}</p>
+              <button className="btn btn-outline-primary" onClick={() => taskStatus(task._id, task.status)}>
+                {task.status === 'Complete' ? 'Mark as In Progress' : 'Mark as Complete'}
+              </button>
+              <button className="btn btn-outline-primary" onClick={() => deleteTask(task._id)}>Remove</button>
+            </div>
+          </div>
         ))}
       </div>
     </div>
   );
-            }
+}
 
 export default MyTasks;

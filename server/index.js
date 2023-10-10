@@ -8,6 +8,8 @@ app.use(require("express").json());
 app.use(require("express").urlencoded());
 app.use(require("cors")());
 
+const path = require('path');
+
 async function connecting(){
     try {
         await mongoose.connect(process.env.MONGO);
@@ -21,6 +23,13 @@ connecting()
 
 app.use("/tasks", require ("./routes/tasksRoutes"));
 app.use("/users", require ("./routes/usersRoutes"));
+
+app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, '../taskapp/build')));
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../taskapp/build', 'index.html'));
+});
 
 
     app.listen(port, () => {

@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
-function AddTask() {
-  const initialStatus = ["In Progress", "Compeleted", "Not Started"];
+function AddItem() {
+  const initialStatus = ["To Get", "Ordered", "Got"];
   const [userId, setUserId] = useState(null); 
   const [email, setEmail] = useState(JSON.parse(localStorage.getItem("user"))?.email);
   const [formData, setFormData] = useState({
     title: '',
+    price: "",
     description: '',
     status: 'To Do',
     due: '',
@@ -22,7 +23,7 @@ const fetchCats = async () => {
   try {
    const res =  await axios.get('http://localhost:4000/tasks/categories')
     console.log(res)
-    // if response is okay - setCategories:
+
       setCategories(res.data);
   } catch (error) {
     console.log(error)
@@ -56,11 +57,12 @@ findUserId()
       e.preventDefault();
       const dataToSend = { ...formData, user_id: userId };
       console.log(dataToSend)
-     const res = await axios.post('http://localhost:4000/tasks/new', dataToSend)
+     const res = await axios.post('http://localhost:4000/items/new', dataToSend)
   
   
       setFormData({
         title: '',
+        price: "",
         description: '',
         status: '',
         due: '',
@@ -84,12 +86,16 @@ findUserId()
 
   return (
     <div className="addContainer">
-      <h1>Add Task</h1>
+      <h1>Add Item</h1>
       <div className="formContainer">
         <form onSubmit={handleSubmit} className="form-group">
           <div className="form-group">
             <label>Title:</label>
             <input type="text" name="title" value={formData.title} onChange={handleChange} className="form-control"/>
+          </div>
+          <div className="form-group">
+            <label>Price:</label>
+            <input type="text" name="price" value={formData.price} onChange={handleChange} className="form-control"/>
           </div>
           <div className="form-group">
             <label>Description:</label>
@@ -126,4 +132,4 @@ findUserId()
   )
 }
   
-export default AddTask
+export default AddItem

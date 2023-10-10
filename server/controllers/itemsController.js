@@ -1,12 +1,13 @@
 const Tasks = require('../models/tasks');
 const Users = require('../models/users'); 
+const Items = require('../models/tasks');
 
 class tasksController {
 
     async findAll(req, res){
         try{
-            const tasks = await Tasks.find();
-            res.send(tasks);
+            const items = await Items.find();
+            res.send(items);
         }
         catch(e){
             res.send({e})
@@ -15,33 +16,33 @@ class tasksController {
 
     async findCategories(req, res) {
         try {
-            const tasks = await Tasks.find().select('category -_id');
-            const uniqueCategories = [...new Set(tasks.map(task => task.category))];
+            const tasks = await Items.find().select('category -_id');
+            const uniqueCategories = [...new Set(items.map(task => item.category))];
             res.send(uniqueCategories);
         } catch (e) {
             res.send({ e });
         }
     }
 
-    async findUserTasksEmail(req, res) {
+    async findUserItemsEmail(req, res) {
         const { email } = req.body;
         try {
             const user = await Users.findOne({ email }); 
             if (!user) {
                 return res.send({ error: "User not found" });
             }
-            const tasks = await Tasks.find({ user_id: user._id });
-            res.send(tasks);
+            const tasks = await Items.find({ user_id: user._id });
+            res.send(items);
         } catch (e) {
             res.send({ e });
         }
     }
 
-    async findUserTasks(req, res){
+    async findUserItems(req, res){
         const { user_id } = req.body; 
         try {
-            const tasks = await Tasks.find({ user_id }); 
-            res.send(tasks);
+            const tasks = await Items.find({ user_id }); 
+            res.send(items);
         }
         catch(e) {
             res.send({ e });
@@ -49,10 +50,10 @@ class tasksController {
     }
 
     async findOne(req ,res){
-        let { task_id } = req.params;
+        let { item_id} = req.params;
         try{
-            const task = await Tasks.findOne({_id:task_id});
-            res.send(task);
+            const task = await Items.findOne({_id:item_id});
+            res.send(items);
         }
         catch(e){
             res.send({e})
@@ -61,10 +62,10 @@ class tasksController {
     }
 
     async insert (req, res) {
-        const task = req.body;
-        console.log(task);
+        const item = req.body;
+        console.log(item);
         try{
-            const done = await Tasks.create(task);
+            const done = await Items.create(item);
             res.send(done)
         }
         catch(e){
@@ -73,9 +74,9 @@ class tasksController {
     }
 
     async taskStatus(req, res) {
-        const { taskId, newStatus } = req.body;
+        const { itemId, newStatus } = req.body;
         try {
-          const updated = await Tasks.updateOne({ _id: taskId }, { $set: { status: newStatus } });
+          const updated = await Items.updateOne({ _id: itemId }, { $set: { status: newStatus } });
           res.send({ updated });
         } catch (error) {
           res.send({ error });
@@ -86,7 +87,7 @@ class tasksController {
         let { taskId } = req.body;
         
         try{
-            const removed = await Tasks.deleteOne({ _id: taskId });
+            const removed = await Items.deleteOne({ _id: itemId });
             
             res.send({removed});
         }
@@ -96,11 +97,11 @@ class tasksController {
     }
     
     async update (req, res){
-        let { taskId, title, description, status, category }  = req.body;
+        let { itemId, title, price, description, status, category }  = req.body;
         try{
-            const updated = await Tasks.updateOne(
-                { _id: taskId },
-                { $set: { title, description, status, category } } 
+            const updated = await Items.updateOne(
+                { _id: itemId },
+                { $set: { title, price, description, status, category } } 
             );
             res.send({updated});
         }
@@ -111,4 +112,4 @@ class tasksController {
 
 
 };
-module.exports = new tasksController();
+module.exports = new itemsController();

@@ -60,6 +60,7 @@ useEffect(() => {
         <div className="tableContainer">
 
         <Table
+             class="table table-hover"
               width={1000}
               height={400}
               headerHeight={40}
@@ -75,17 +76,27 @@ useEffect(() => {
           >
           <Column label="Title" dataKey="title" width={200} />
           <Column label="Description" dataKey="description" width={300} />
-          <Column label="Status" dataKey="status" width={100} />
-          <Column label="Category" dataKey="category" width={100} />
-          <Column label="Due Date" dataKey="due" width={100} cellRenderer={({ cellData }) => new Date(cellData).toLocaleDateString()} />
-          <Column label="Actions" width={300} cellRenderer={({ rowData }) => (
-            <>
-              <button onClick={() => markComplete(rowData._id, rowData.status)}>
-      {rowData.status === 'Complete' ? 'Mark as In Progress' : 'Mark as Complete'}
-    </button>
-              <button onClick={() => deleteTask(rowData._id)}>Delete</button>
-            </>
-          )} />
+          <Column label="Status" dataKey="status" width={150} />
+          <Column label="Category" dataKey="category" width={175} />
+          <Column label="Due Date" dataKey="due" width={120} cellRenderer={({ cellData }) => new Date(cellData).toLocaleDateString()} />
+          <Column 
+        label="Update" 
+        width={250} 
+        cellRenderer={({ rowData }) => (
+            <button className="btn btn-outline-primary" onClick={() => markComplete(rowData._id, rowData.status)}>
+                {rowData.status === 'Complete' ? 'Mark as In Progress' : 'Mark as Complete'}
+            </button>
+        )}
+    />
+    <Column 
+        label="Delete" 
+        width={250} 
+        cellRenderer={({ rowData }) => (
+            <button className="btn btn-outline-primary" onClick={() => deleteTask(rowData._id)}>
+                Delete
+            </button>
+        )}
+    />
         </Table>
         </div>
   </div>

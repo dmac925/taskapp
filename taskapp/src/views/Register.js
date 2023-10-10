@@ -46,44 +46,56 @@ const Register = (props) => {
 
   return (
 
+
+    <div className="formContainer">
+
     <div>
-        <h1>Add User</h1>
+        <h1>Register</h1>
 
     <div className="formContainer">
       <form onSubmit={handleSubmit}>
-        <label>
-          Email Address:
+      <div className="mb-3">
+        <label htmlFor="email" className="form-label">Email address
           <input 
             type="text"
-            name="email"
+            className="form-control"
+            id="email"
             value={formData.email}
             onChange={handleChange}
           />
         </label>
+        </div>
+        
 
-        <label>
-          Password:
-          <input 
+        <div className="mb-3">
+        <label htmlFor="password" className="form-label">Password
+        <input
             type="password"
-            name="password"
+            className="form-control"
+            id="password"
             value={formData.password}
             onChange={handleChange}
           />
         </label>
-        <label>
-          Repeat Password:
-          <input 
+        </div>
+
+        <div className="mb-3">
+        <label htmlFor="password" className="form-label">Password
+        <input
             type="password"
-            name="password2"
+            className="form-control"
+            id="password2"
             value={formData.password2}
             onChange={handleChange}
           />
         </label>
+        </div>
      
-        <button type="submit">Submit</button>
+        <button type="submit" className="btn btn-primary">Submit</button>
       </form>
       <div class="registerMessage">
       <p>{message}</p>
+      </div>
       </div>
       </div>
     </div>

@@ -45,25 +45,32 @@ const Login = (props) => {
     }
   };
   return (
-
     <div className="formContainer">
+    <div>
+    <h1>Login</h1>
+  
 
-    <form
-      onSubmit={handleSubmit}
-      onChange={handleChange}
-    >
-      <label>Email</label>
-      <input name="email" />
-      <label>Password</label>
-      <input type="password"
-      name="password" />
-      <button>login</button>
-      <div className="message">
-        <h4>{message}</h4>
+    <form onSubmit={handleSubmit} onChange={handleChange}>
+      <div className="mb-3">
+        <label htmlFor="email" className="form-label">Email address
+        <input type="email" className="form-control" id="email" name="email" />
+        </label>
+        <div id="emailHelp" className="form-text">We'll never share your email.</div>
       </div>
+      <div className="mb-3">
+        <label htmlFor="password" className="form-label">Password
+        <input type="password" className="form-control" id="password" name="password" />
+        </label>
+      </div>
+      <button type="submit" className="btn btn-primary">Submit</button>
     </form>
+    <div className="message">
+      <h4>{message}</h4>
     </div>
-  );
+    </div>
+  </div>
+);
 };
+
 
 export default Login;
