@@ -19,7 +19,7 @@ async function connecting(){
     }
     }
 
-connecting()
+
 
 app.use("/tasks", require ("./routes/tasksRoutes"));
 app.use("/users", require ("./routes/usersRoutes"));
@@ -32,7 +32,7 @@ app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, '../taskapp/build', 'index.html'));
 });
 
-connecting.then(() => {
+connecting().then(() => {
     app.listen(port, () => {
         console.log("listening for requests");
     })
