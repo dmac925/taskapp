@@ -11,8 +11,6 @@ router.post('/userItemsEmail', controller.findUserItemsEmail);
 
 router.post('/userItems', controller.findUserItems);
 
-router.post('/itemStatus', controller.itemStatus);
-
 router.post('/new', controller.insert);
 
 router.post('/delete', controller.delete);
