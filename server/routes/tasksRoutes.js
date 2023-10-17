@@ -7,8 +7,6 @@ router.get('/', controller.findAll);
 
 router.get('/categories', controller.findCategories);
 
-router.post('/userTasksEmail', controller.findUserTasksEmail);
-
 router.post('/userTasks', controller.findUserTasks);
 
 router.post('/taskStatus', controller.taskStatus);

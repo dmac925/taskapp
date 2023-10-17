@@ -25,6 +25,7 @@ const MyNavbar = ({ isLoggedIn, isAdmin, logout }) => {
                 <Nav.Link><NavLink to="/myItems">My Shopping List</NavLink></Nav.Link>
                 <Nav.Link><NavLink to="/myTasksTable">My Tasks Table</NavLink></Nav.Link>
                 <Nav.Link><NavLink to="/addTask">Add Task</NavLink></Nav.Link>
+                <Nav.Link><NavLink to="/userInput">User Input</NavLink></Nav.Link>
                 <Nav.Link><NavLink to="/addItem">Add Item</NavLink></Nav.Link>
               </>
             )}

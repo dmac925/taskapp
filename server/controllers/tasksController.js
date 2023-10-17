@@ -23,24 +23,13 @@ class tasksController {
         }
     }
 
-    async findUserTasksEmail(req, res) {
-        const { email } = req.body;
-        try {
-            const user = await Users.findOne({ email }); 
-            if (!user) {
-                return res.send({ error: "User not found" });
-            }
-            const tasks = await Tasks.find({ user_id: user._id });
-            res.send(tasks);
-        } catch (e) {
-            res.send({ e });
-        }
-    }
-
     async findUserTasks(req, res){
         const { user_id } = req.body; 
+        console.log("Received User ID:", user_id);
+
         try {
             const tasks = await Tasks.find({ user_id }); 
+            console.log("Tasks found:", tasks);
             res.send(tasks);
         }
         catch(e) {

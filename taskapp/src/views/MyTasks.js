@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from "axios";
 import { TaskCard } from './TaskCard';
 import { URL } from "../config";
+import UserContext from '../UserContext';
+
+
 
 function MyTasks() {
 
@@ -10,14 +13,15 @@ function MyTasks() {
   const [selectedStatus, setSelectedStatus] = useState('')
   const [searchWord, setSearchWord] = useState('');
   const [editableTitle, setEditableTitle] = useState(null);
+  const userID = useContext(UserContext);
+  console.log("UserID from Context:", userID);
 
 
-  const email = JSON.parse(localStorage.getItem("user"))?.email;
   
   const fetchMyTasks = async () => {
     try {
-        const response = await axios.post(`${URL}/tasks/userTasksEmail`, { email });
-        setTasks(response.data);
+      const response = await axios.post(`${URL}/tasks/userTasks`, { user_id: userID.userID });
+      setTasks(Array.isArray(response.data) ? response.data : []);
         console.log(response.data)
     } catch (error) {
         console.log(error);

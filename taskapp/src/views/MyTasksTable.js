@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Table, Column, AutoSizer } from 'react-virtualized';
 import 'react-virtualized/styles.css';
 import axios from "axios"
 import { URL } from "../config";
+import UserContext from '../UserContext';
+
 
 
 
@@ -14,12 +16,12 @@ function MyTasksTable() {
   const [searchWord, setSearchWord] = useState('');
   const [sortDirection, setSortDirection] = useState('ASC');
 const [sortBy, setSortBy] = useState('title');
+const userID = useContext(UserContext);
 
-  const email = JSON.parse(localStorage.getItem("user"))?.email;
   
   const fetchMyTasks = async () => {
     try {
-        const response = await axios.post(`${URL}/tasks/userTasksEmail`, { email });
+      const response = await axios.post(`${URL}/tasks/userTasks`, { user_id: userID.userID });
         setTasks(response.data);
         console.log(response.data)
     } catch (error) {
